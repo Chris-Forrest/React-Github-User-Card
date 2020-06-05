@@ -10,8 +10,12 @@ class App extends React.Component {
 
   state = {
     users: [],
-    followers: []
+    followers: [],
+    githubUser:''
   }
+
+  /*************change handler *******************************/
+  
 
   /***************component did mount axios calls  *******************************/
   
