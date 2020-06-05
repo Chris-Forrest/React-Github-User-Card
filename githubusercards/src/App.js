@@ -6,16 +6,21 @@ import UserCard from './components/UserCard';
 import FollowersCard from './components/FollowersCard';
 
 class App extends React.Component {
+  /****************set initial state  ******************************/
 
   state = {
-    user: [],
+    users: [],
+    followers: []
   }
+
+  /***************component did mount axios calls  *******************************/
   
   componentDidMount() {
     axios
       .get('https://api.github.com/users/Chris-Forrest')
-        .then( res => {
-          console.log(res)
+        .then(res => {
+          this.setState({ users: [res.data] })
+          console.log('user data', this.state.users)
         })
         .catch( err => console.log('Fetch user error', err))
   }
@@ -25,7 +30,9 @@ class App extends React.Component {
     return(
       <div className='App'>
         <h1>Github User</h1>
-        <UserCard  />
+        {this.state.users.map( user => (
+          < UserCard user={user} />
+        ))}
         <FollowersCard />
       </div>
     )
