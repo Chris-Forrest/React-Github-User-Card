@@ -17,12 +17,20 @@ class App extends React.Component {
   
   componentDidMount() {
     axios
-      .get('https://api.github.com/users/Chris-Forrest')
+      .get(`https://api.github.com/users/Chris-Forrest`)
         .then(res => {
           this.setState({ users: [res.data] })
           console.log('user data', this.state.users)
         })
         .catch( err => console.log('Fetch user error', err))
+    axios
+      .get(`https://api.github.com/users/Chris-Forrest/followers`)
+        .then( res => {
+          this.setState({ followers: res.data })
+          console.log('followers data', this.state.followers)
+        })
+        .catch(err => console.log('error fetching followers', err))
+
   }
 
 
@@ -30,10 +38,15 @@ class App extends React.Component {
     return(
       <div className='App'>
         <h1>Github User</h1>
+       
         {this.state.users.map( user => (
           < UserCard user={user} />
         ))}
-        <FollowersCard />
+        
+        {this.state.followers.map( follower => (
+          < FollowersCard follower={follower} />
+        ))}
+
       </div>
     )
   }
